@@ -48,9 +48,9 @@ class BaseHTTPMiddleware:
             raise RuntimeError("No response returned.")
 
         if 'http.response.template' in scope.get("extensions", {}):
-            assert message["type"] == "http.response.template", message["type"]
-            await self._orig_send(message)
-            message = await queue.get()
+            if message["type"] == "http.response.template":
+                await self._orig_send(message)
+                message = await queue.get()
 
         assert message["type"] == "http.response.start", message["type"]
 
