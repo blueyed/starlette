@@ -112,3 +112,27 @@ def test_websocket_blocking_receive():
     with client.websocket_connect("/") as websocket:
         data = websocket.receive_json()
         assert data == {"message": "test"}
+
+
+def test_error_with_middleware_and_testclient_exit():
+    """TestClient's __exit__ should not raise the exception again."""
+    app = Starlette()
+
+    @app.middleware("http")
+    async def http_middleware(request, call_next):
+        return await call_next(request)
+
+    @app.route("/error")
+    async def error(request):
+        pytest.fail("should_only_fail_once")
+
+    with TestClient(app) as client:
+        with pytest.raises(pytest.fail.Exception):
+            client.get("/error")
+
+    # XXX: needed to fix the following on stderr when running all tests?!
+    # Task exception was never retrieved
+    # future: <Task finished coro=<Starlette.__call__() done, defined at
+    # …/starlette/applications.py:132> exception=should_only_fail_once>
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(asyncio.sleep(0))
