@@ -91,6 +91,7 @@ class _ASGIAdapter(requests.adapters.HTTPAdapter):
     def __init__(self, app: ASGI3App, raise_server_exceptions: bool = True) -> None:
         self.app = app
         self.raise_server_exceptions = raise_server_exceptions
+        self.raised_server_exception = None
 
     def send(  # type: ignore
         self, request: requests.PreparedRequest, *args: typing.Any, **kwargs: typing.Any
@@ -235,6 +236,7 @@ class _ASGIAdapter(requests.adapters.HTTPAdapter):
             loop.run_until_complete(self.app(scope, receive, send))
         except BaseException as exc:
             if self.raise_server_exceptions:
+                self.raised_server_exception = exc
                 raise exc from None
 
         if self.raise_server_exceptions:
@@ -374,7 +376,7 @@ class TestClient(requests.Session):
         else:
             app = typing.cast(ASGI2App, app)
             asgi_app = _WrapASGI2(app)  #  type: ignore
-        adapter = _ASGIAdapter(
+        adapter = self.adapter = _ASGIAdapter(
             asgi_app, raise_server_exceptions=raise_server_exceptions
         )
         self.mount("http://", adapter)
@@ -454,7 +456,11 @@ class TestClient(requests.Session):
 
     def __exit__(self, *args: typing.Any) -> None:
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(self.wait_shutdown())
+        try:
+            loop.run_until_complete(self.wait_shutdown())
+        except BaseException as exc:
+            if exc is not self.adapter.raised_server_exception:
+                raise
 
     async def lifespan(self) -> None:
         scope = {"type": "lifespan"}
