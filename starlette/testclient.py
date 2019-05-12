@@ -240,7 +240,9 @@ class _ASGIAdapter(requests.adapters.HTTPAdapter):
                 def __init__(self, app: ASGI3App, debug: bool = False) -> None:
                     self.app = app
 
-                async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+                async def __call__(
+                    self, scope: Scope, receive: Receive, send: Send
+                ) -> None:
                     try:
                         await self.app(scope, receive, send)
                     except BaseException as exc:
