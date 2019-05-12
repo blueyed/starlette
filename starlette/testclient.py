@@ -235,7 +235,7 @@ class _ASGIAdapter(requests.adapters.HTTPAdapter):
         if self.raise_server_exceptions:
 
             class WrapToIgnoreServerErrors:
-                raised_server_exception = None
+                raised_server_exception: typing.Union[None, BaseException] = None
 
                 def __init__(self, app: ASGI3App, debug: bool = False) -> None:
                     self.app = app
