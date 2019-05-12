@@ -232,12 +232,33 @@ class _ASGIAdapter(requests.adapters.HTTPAdapter):
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
 
-        try:
-            loop.run_until_complete(self.app(scope, receive, send))
-        except BaseException as exc:
-            if self.raise_server_exceptions:
-                self.raised_server_exception = exc
+        if self.raise_server_exceptions:
+
+            class WrapToIgnoreServerErrors:
+                raised_server_exception = None
+
+                def __init__(self, app: ASGI3App, debug: bool = False) -> None:
+                    self.app = app
+
+                async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+                    try:
+                        await self.app(scope, receive, send)
+                    except BaseException as exc:
+                        if exc is not self.raised_server_exception:
+                            raise exc from None
+
+            app = WrapToIgnoreServerErrors(self.app)
+            try:
+                loop.run_until_complete(app(scope, receive, send))
+            except BaseException as exc:
+                app.raised_server_exception = exc
                 raise exc from None
+
+        else:
+            try:
+                loop.run_until_complete(self.app(scope, receive, send))
+            except BaseException:
+                pass
 
         if self.raise_server_exceptions:
             assert response_started, "TestClient did not receive any response."

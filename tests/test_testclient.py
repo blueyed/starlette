@@ -146,12 +146,4 @@ def test_error_with_middleware_and_testclient_exit(raise_server_exceptions):
             with TestClient(app) as client:
                 client.get("/error")
 
-    # assert events == ["startup", "shutdown"]
-    assert events == ["startup"]
-
-    # XXX: needed to fix the following on stderr when running all tests?!
-    # Task exception was never retrieved
-    # future: <Task finished coro=<Starlette.__call__() done, defined at
-    # …/starlette/applications.py:132> exception=should_only_fail_once>
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(asyncio.sleep(0))
+    assert events == ["startup", "shutdown"]
