@@ -24,7 +24,7 @@ def user_me(request):
     return Response(content, media_type="text/plain")
 
 
-def user_no_match(request):  # pragma: no cover
+def user_no_match(request):
     content = "User fixed no match"
     return Response(content, media_type="text/plain")
 

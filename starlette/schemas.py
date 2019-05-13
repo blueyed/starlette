@@ -30,7 +30,7 @@ class EndpointInfo(typing.NamedTuple):
 
 class BaseSchemaGenerator:
     def get_schema(self, routes: typing.List[BaseRoute]) -> dict:
-        raise NotImplementedError()  # pragma: no cover
+        raise NotImplementedError()
 
     def get_endpoints(
         self, routes: typing.List[BaseRoute]

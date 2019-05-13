@@ -94,7 +94,7 @@ class AuthenticationBackend:
     async def authenticate(
         self, conn: HTTPConnection
     ) -> typing.Optional[typing.Tuple["AuthCredentials", "BaseUser"]]:
-        raise NotImplementedError()  # pragma: no cover
+        raise NotImplementedError()
 
 
 class AuthCredentials:
@@ -105,15 +105,15 @@ class AuthCredentials:
 class BaseUser:
     @property
     def is_authenticated(self) -> bool:
-        raise NotImplementedError()  # pragma: no cover
+        raise NotImplementedError()
 
     @property
     def display_name(self) -> str:
-        raise NotImplementedError()  # pragma: no cover
+        raise NotImplementedError()
 
     @property
     def identity(self) -> str:
-        raise NotImplementedError()  # pragma: no cover
+        raise NotImplementedError()
 
 
 class SimpleUser(BaseUser):

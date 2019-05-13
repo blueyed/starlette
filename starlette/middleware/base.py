@@ -64,4 +64,4 @@ class BaseHTTPMiddleware:
     async def dispatch(
         self, request: Request, call_next: RequestResponseEndpoint
     ) -> Response:
-        raise NotImplementedError()  # pragma: no cover
+        raise NotImplementedError()

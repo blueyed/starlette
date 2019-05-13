@@ -52,7 +52,7 @@ def testclient_as_contextmanager():
 def test_error_on_startup():
     with pytest.raises(RuntimeError):
         with TestClient(startup_error_app):
-            pass  # pragma: no cover
+            raise NotImplementedError()
 
 
 def test_testclient_asgi2():
