@@ -3,7 +3,7 @@ language: python
 cache: false
 env:
   global:
-    - PYTEST_ADDOPTS=--cov-report=xml --cov-report=term-missing
+    - PYTEST_ADDOPTS=--cov-report=xml
 jobs:
   include:
     - env: TOXENV=py36-coverage
@@ -23,3 +23,7 @@ after_script:
       pip install codecov
       codecov -f coverage.xml
     fi
+branches:
+  only:
+    - master
+    - /^\d+\.\d+(\.\d+)?(-\S*)?$/
