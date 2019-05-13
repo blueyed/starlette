@@ -23,3 +23,7 @@ after_script:
       pip install codecov
       codecov -f coverage.xml
     fi
+branches:
+  only:
+    - master
+    - /^\d+\.\d+(\.\d+)?(-\S*)?$/
