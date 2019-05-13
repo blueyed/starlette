@@ -27,10 +27,7 @@ class TrustedHostMiddleware:
         self.www_redirect = www_redirect
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        if self.allow_any or scope["type"] not in (
-            "http",
-            "websocket",
-        ):  # pragma: no cover
+        if self.allow_any or scope["type"] not in ("http", "websocket"):
             await self.app(scope, receive, send)
             return
 

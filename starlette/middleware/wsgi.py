@@ -94,7 +94,7 @@ class WSGIResponder:
                 )
         finally:
             if not sender.done():
-                sender.cancel()  # pragma: no cover
+                sender.cancel()
 
     async def sender(self, send: Send) -> None:
         while True:

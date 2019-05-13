@@ -437,7 +437,7 @@ class TestClient(requests.Session):
         except _Upgrade as exc:
             session = exc.session
         else:
-            raise RuntimeError("Expected WebSocket upgrade")  # pragma: no cover
+            raise RuntimeError("Expected WebSocket upgrade")
 
         return session
 

@@ -17,7 +17,7 @@ app.mount("/subapp", subapp)
 @app.websocket_route("/ws")
 def ws(session):
     """ws"""
-    pass  # pragma: no cover
+    raise NotImplementedError()
 
 
 @app.route("/users", methods=["GET", "HEAD"])
@@ -29,7 +29,7 @@ def list_users(request):
         examples:
           [{"username": "tom"}, {"username": "lucy"}]
     """
-    pass  # pragma: no cover
+    raise NotImplementedError()
 
 
 @app.route("/users", methods=["POST"])
@@ -41,7 +41,7 @@ def create_user(request):
         examples:
           {"username": "tom"}
     """
-    pass  # pragma: no cover
+    raise NotImplementedError()
 
 
 @app.route("/orgs")
@@ -54,7 +54,7 @@ class OrganisationsEndpoint(HTTPEndpoint):
             examples:
               [{"name": "Foo Corp."}, {"name": "Acme Ltd."}]
         """
-        pass  # pragma: no cover
+        raise NotImplementedError()
 
     def post(self, request):
         """
@@ -64,7 +64,7 @@ class OrganisationsEndpoint(HTTPEndpoint):
             examples:
               {"name": "Foo Corp."}
         """
-        pass  # pragma: no cover
+        raise NotImplementedError()
 
 
 @app.route("/regular-docstring-and-schema")
@@ -78,7 +78,7 @@ def regular_docstring_and_schema(request):
       200:
         description: This is included in the schema.
     """
-    pass  # pragma: no cover
+    raise NotImplementedError()
 
 
 @app.route("/regular-docstring")
@@ -86,12 +86,12 @@ def regular_docstring(request):
     """
     This a regular docstring example (not included in schema)
     """
-    pass  # pragma: no cover
+    raise NotImplementedError()
 
 
 @app.route("/no-docstring")
 def no_docstring(request):
-    pass  # pragma: no cover
+    raise NotImplementedError()
 
 
 @subapp.route("/subapp-endpoint")
@@ -101,7 +101,7 @@ def subapp_endpoint(request):
       200:
         description: This endpoint is part of a subapp.
     """
-    pass  # pragma: no cover
+    raise NotImplementedError()
 
 
 @app.route("/schema", methods=["GET"], include_in_schema=False)

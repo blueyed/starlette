@@ -269,16 +269,10 @@ def test_websocket_scope_interface():
     interface.
     """
 
-    async def mock_receive():
-        pass  # pragma: no cover
-
-    async def mock_send(message):
-        pass  # pragma: no cover
-
     websocket = WebSocket(
         {"type": "websocket", "path": "/abc/", "headers": []},
-        receive=mock_receive,
-        send=mock_send,
+        receive=NotImplemented,
+        send=NotImplemented,
     )
     assert websocket["type"] == "websocket"
     assert dict(websocket) == {"type": "websocket", "path": "/abc/", "headers": []}

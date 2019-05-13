@@ -101,7 +101,7 @@ def test_cors_disallowed_preflight():
 
     @app.route("/")
     def homepage(request):
-        pass  # pragma: no cover
+        raise NotImplementedError()
 
     client = TestClient(app)
 

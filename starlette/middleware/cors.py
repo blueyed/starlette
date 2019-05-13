@@ -64,7 +64,7 @@ class CORSMiddleware:
         self.preflight_headers = preflight_headers
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        if scope["type"] != "http":  # pragma: no cover
+        if scope["type"] != "http":
             await self.app(scope, receive, send)
             return
 

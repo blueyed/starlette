@@ -94,4 +94,4 @@ class GZipResponder:
 
 
 async def unattached_send(message: Message) -> None:
-    raise RuntimeError("send awaitable not set")  # pragma: no cover
+    raise RuntimeError("send awaitable not set")

@@ -124,13 +124,13 @@ def compile_path(
 
 class BaseRoute:
     def matches(self, scope: Scope) -> typing.Tuple[Match, Scope]:
-        raise NotImplementedError()  # pragma: no cover
+        raise NotImplementedError()
 
     def url_path_for(self, name: str, **path_params: str) -> URLPath:
-        raise NotImplementedError()  # pragma: no cover
+        raise NotImplementedError()
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        raise NotImplementedError()  # pragma: no cover
+        raise NotImplementedError()
 
 
 class Route(BaseRoute):

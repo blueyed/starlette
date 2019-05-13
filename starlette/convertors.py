@@ -6,10 +6,10 @@ class Convertor:
     regex = ""
 
     def convert(self, value: str) -> typing.Any:
-        raise NotImplementedError()  # pragma: no cover
+        raise NotImplementedError()
 
     def to_string(self, value: typing.Any) -> str:
-        raise NotImplementedError()  # pragma: no cover
+        raise NotImplementedError()
 
 
 class StringConvertor(Convertor):
