@@ -26,4 +26,5 @@ after_script:
 branches:
   only:
     - master
+    - next
     - /^\d+\.\d+(\.\d+)?(-\S*)?$/
