@@ -220,6 +220,7 @@ class _ASGIAdapter(requests.adapters.HTTPAdapter):
                 template = message["template"]
                 context = message["context"]
 
+        self.handled_server_exception = None
         request_complete = False
         response_started = False
         response_complete = False
