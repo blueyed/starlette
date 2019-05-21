@@ -70,7 +70,7 @@ class ExceptionMiddleware:
                 handler = self._lookup_exception_handler(exc)
 
             if handler is None:
-                raise exc from None
+                raise
 
             if response_started:
                 msg = "Caught handled exception, but response already started."

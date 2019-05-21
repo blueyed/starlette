@@ -246,7 +246,7 @@ class _ASGIAdapter(requests.adapters.HTTPAdapter):
                 except BaseException as exc:
                     if self.adapter.raise_server_exceptions:
                         if exc is not self.adapter.handled_server_exception:
-                            raise exc from None
+                            raise
 
         app = WrapForServerErrors(self)
 
@@ -256,7 +256,7 @@ class _ASGIAdapter(requests.adapters.HTTPAdapter):
             assert self.handled_server_exception is None
             self.handled_server_exception = exc
             if self.raise_server_exceptions:
-                raise exc from None
+                raise
 
         if self.raise_server_exceptions:
             assert response_started, "TestClient did not receive any response."
