@@ -157,6 +157,13 @@ class _ASGIAdapter(requests.adapters.HTTPAdapter):
             "extensions": {"http.response.template": {}},
         }
 
+        request_complete = False
+        response_started = False
+        response_complete = False
+        raw_kwargs = {"body": io.BytesIO()}  # type: typing.Dict[str, typing.Any]
+        template = None
+        context = None
+
         async def receive() -> Message:
             nonlocal request_complete, response_complete
 
@@ -222,12 +229,6 @@ class _ASGIAdapter(requests.adapters.HTTPAdapter):
                 context = message["context"]
 
         self.handled_server_exception = None
-        request_complete = False
-        response_started = False
-        response_complete = False
-        raw_kwargs = {"body": io.BytesIO()}  # type: typing.Dict[str, typing.Any]
-        template = None
-        context = None
 
         try:
             loop = asyncio.get_event_loop()
