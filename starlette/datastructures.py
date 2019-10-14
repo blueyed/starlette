@@ -44,7 +44,7 @@ class URL:
             if query_string:
                 url += "?" + query_string.decode()
         elif components:
-            assert not url, 'Cannot set both "scope" and "**components".'
+            assert not url, 'Cannot set both "url" and "**components".'
             url = URL("").replace(**components).components.geturl()
 
         self._url = url
@@ -161,7 +161,7 @@ class URLPath(str):
     Used by the routing to return `url_path_for` matches.
     """
 
-    def __new__(cls, path: str, protocol: str = "", host: str = "") -> str:
+    def __new__(cls, path: str, protocol: str = "", host: str = "") -> "URLPath":
         assert protocol in ("http", "websocket", "")
         return str.__new__(cls, path)  # type: ignore
 

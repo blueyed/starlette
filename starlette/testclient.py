@@ -408,7 +408,7 @@ class TestClient(requests.Session):
         self.app = asgi_app
         self.base_url = base_url
 
-    def request(
+    def request(  # type: ignore
         self,
         method: str,
         url: str,
