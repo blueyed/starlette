@@ -97,7 +97,7 @@ class Response:
         secure: bool = False,
         httponly: bool = False,
     ) -> None:
-        cookie = http.cookies.SimpleCookie()
+        cookie = http.cookies.SimpleCookie()  # type: http.cookies.BaseCookie
         cookie[key] = value
         if max_age is not None:
             cookie[key]["max-age"] = max_age  # type: ignore
@@ -156,6 +156,7 @@ class UJSONResponse(JSONResponse):
     media_type = "application/json"
 
     def render(self, content: typing.Any) -> bytes:
+        assert ujson is not None, "ujson must be installed to use UJSONResponse"
         return ujson.dumps(content, ensure_ascii=False).encode("utf-8")
 
 
